@@ -10,7 +10,8 @@ import { setToken } from "@/redux/modules/global/action";
 import { useTranslation } from "react-i18next";
 import { setTabsList } from "@/redux/modules/tabs/action";
 import { UserOutlined, LockOutlined, CloseCircleOutlined } from "@ant-design/icons";
-
+import { login } from "@/api/myapi/index";
+import { setToken2 } from '@/utils/token'
 const LoginForm = (props: any) => {
 	const { t } = useTranslation();
 	const { setToken, setTabsList } = props;
@@ -19,15 +20,23 @@ const LoginForm = (props: any) => {
 	const [loading, setLoading] = useState<boolean>(false);
 
 	// 登录
-	const onFinish = async (loginForm: Login.ReqLoginForm) => {
+	const onFinish = async (loginForm: any) => {
 		try {
 			setLoading(true);
-			loginForm.password = md5(loginForm.password);
-			const { data } = await loginApi(loginForm);
-			setToken(data?.access_token);
-			setTabsList([]);
-			message.success("登录成功！");
-			navigate(HOME_URL);
+			//先走自己接口 
+			const res:any = await login(loginForm);
+			if (res.code === 0) {
+				setToken2(res.data.token!)
+				//密码加密
+				loginForm.password = md5(loginForm.password);
+				//登录接口
+				const { data } = await loginApi(loginForm);
+				//只拿到了token
+				setToken(data?.access_token);
+				setTabsList([]);
+				message.success("登录成功！");
+				navigate(HOME_URL);
+			}
 		} finally {
 			setLoading(false);
 		}

@@ -3,22 +3,22 @@ import lazyLoad from "@/routers/utils/lazyLoad";
 import { LayoutIndex } from "@/routers/constant";
 import { RouteObject } from "@/routers/interface";
 
-// menu 模块
-const menuRouter: Array<RouteObject> = [
+// dashboard 模块
+const dashboardRouter: Array<RouteObject> = [
 	{
 		element: <LayoutIndex />,
 		children: [
 			{
-				path: "/menu/menu1",
-				element: lazyLoad(React.lazy(() => import("@/views/menu/menu1/index"))),
+				path: "/dashboard/embedded",
+				element: lazyLoad(React.lazy(() => import("@/views/dashboard/embedded/index"))),
 				meta: {
 					requiresAuth: true,
-					title: "政策管理",
-					key: "menu1"
+					title: "商品管理",
+					key: "embedded"
 				}
-			},
+			}
 		]
 	}
 ];
 
-export default menuRouter;
+export default dashboardRouter;

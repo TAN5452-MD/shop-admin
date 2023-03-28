@@ -8,6 +8,7 @@ import { setToken } from "@/redux/modules/global/action";
 import PasswordModal from "./PasswordModal";
 import InfoModal from "./InfoModal";
 import avatar from "@/assets/images/avatar.png";
+import { resetToken2 } from "@/utils/token";
 
 const AvatarIcon = (props: any) => {
 	const { setToken } = props;
@@ -29,6 +30,7 @@ const AvatarIcon = (props: any) => {
 			cancelText: "取消",
 			onOk: () => {
 				setToken("");
+				resetToken2()
 				message.success("退出登录成功！");
 				navigate("/login");
 			}

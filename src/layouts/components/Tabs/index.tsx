@@ -31,7 +31,10 @@ const LayoutTabs = (props: any) => {
 	// add tabs
 	const addTabs = () => {
 		const route = searchRoute(pathname, routerArray);
+
+
 		let newTabsList = JSON.parse(JSON.stringify(tabsList));
+		console.log("route", route);
 		if (tabsList.every((item: any) => item.path !== route.path)) {
 			newTabsList.push({ title: route.meta!.title, path: route.path });
 		}
@@ -50,7 +53,7 @@ const LayoutTabs = (props: any) => {
 				navigate(nextTab.path);
 			});
 		}
-		message.success("你删除了Tabs标签 😆😆😆");
+		message.success("你删除了Tabs标签");
 		setTabsList(tabsList.filter((item: Menu.MenuOptions) => item.path !== tabPath));
 	};
 

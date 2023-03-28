@@ -9,12 +9,12 @@ const menuRouter: Array<RouteObject> = [
 		element: <LayoutIndex />,
 		children: [
 			{
-				path: "/menu/menu1",
-				element: lazyLoad(React.lazy(() => import("@/views/menu/menu1/index"))),
+				path: "/distributor",
+				element: lazyLoad(React.lazy(() => import("@/views/distributor/index"))),
 				meta: {
 					requiresAuth: true,
-					title: "政策管理",
-					key: "menu1"
+					title: "经销商管理",
+					key: "distributor"
 				}
 			},
 		]

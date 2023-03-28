@@ -68,11 +68,45 @@ const LayoutMenu = (props: any) => {
 
 	// 获取菜单列表并处理成 antd menu 需要的格式
 	const [menuList, setMenuList] = useState<MenuItem[]>([]);
+
 	const [loading, setLoading] = useState(false);
 	const getMenuData = async () => {
 		setLoading(true);
 		try {
-			const { data } = await getMenuList();
+			let { data } = await getMenuList();
+
+			data = [
+				{
+					title: '首页',
+					icon: 'HomeOutlined',
+					path: "/home/index"
+				},
+				{
+					title: '用户管理',
+					icon: 'UserOutlined',
+					path: "/form/basicForm"
+				},
+				{
+					title: '商品管理',
+					icon: 'ShoppingOutlined',
+					path: "/dashboard/embedded"
+				},
+				{
+					title: '政策管理',
+					icon: 'AreaChartOutlined',
+					path: "/menu/menu1"
+				},
+				{
+					title: '订单管理',
+					icon: 'UnorderedListOutlined',
+					path: "/dataScreen/index"
+				},
+				{
+					title: '经销商管理',
+					icon: 'AlertOutlined',
+					path: "/distributor"
+				},
+			]
 			if (!data) return;
 			setMenuList(deepLoopFloat(data));
 			// 存储处理过后的所有面包屑导航栏到 redux 中
@@ -87,8 +121,8 @@ const LayoutMenu = (props: any) => {
 	};
 	useEffect(() => {
 		getMenuData();
+		setMenuList([]);
 	}, []);
-
 	// 点击当前菜单跳转页面
 	const navigate = useNavigate();
 	const clickMenu: MenuProps["onClick"] = ({ key }: { key: string }) => {

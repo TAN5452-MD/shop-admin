@@ -18,13 +18,15 @@
 		"commit": "git pull && git add -A && git-cz && git push"
 	},
 	"dependencies": {
-		"antd": "^4.22.2",
+		"@types/js-cookie": "^3.0.3",
+		"antd": "^4.24.8",
 		"axios": "^0.27.2",
 		"driver.js": "^0.9.8",
 		"echarts": "^5.3.0",
 		"echarts-liquidfill": "^3.1.0",
 		"i18next": "^21.8.10",
 		"immer": "^9.0.15",
+		"js-cookie": "^3.0.1",
 		"js-md5": "^0.7.3",
 		"moment": "^2.29.3",
 		"nprogress": "^0.2.0",
