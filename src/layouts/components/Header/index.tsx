@@ -1,3 +1,4 @@
+import React from "react";
 import { Layout } from "antd";
 import AvatarIcon from "./components/AvatarIcon";
 import CollapseIcon from "./components/CollapseIcon";
@@ -8,25 +9,26 @@ import Theme from "./components/Theme";
 import Fullscreen from "./components/Fullscreen";
 import "./index.less";
 
+console.log(React);
 const LayoutHeader = () => {
-	const { Header } = Layout;
+  const { Header } = Layout;
 
-	return (
-		<Header>
-			<div className="header-lf">
-				<CollapseIcon />
-				<BreadcrumbNav />
-			</div>
-			<div className="header-ri">
-				<AssemblySize />
-				<Language />
-				<Theme />
-				<Fullscreen />
-				<span className="username">Hooks</span>
-				<AvatarIcon />
-			</div>
-		</Header>
-	);
+  return (
+    <Header>
+      <div className="header-lf">
+        <CollapseIcon />
+        <BreadcrumbNav />
+      </div>
+      <div className="header-ri">
+        <AssemblySize />
+        <Language />
+        <Theme />
+        <Fullscreen />
+        <span className="username">Hooks</span>
+        <AvatarIcon />
+      </div>
+    </Header>
+  );
 };
 
 export default LayoutHeader;

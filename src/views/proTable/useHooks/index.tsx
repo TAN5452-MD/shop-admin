@@ -1,88 +1,73 @@
-import { useEffect } from "react";
-import { Table, DatePicker, Button, Space } from "antd";
-import useAuthButtons from "@/hooks/useAuthButtons";
-
+import { useEffect, useState } from "react";
+import { Table, Button, Space } from "antd";
+import { selectAllGoodsBrand } from "@/api/myapi/index";
 import "./index.less";
-
+import type { ColumnsType } from "antd/es/table";
 const UseHooks = () => {
-	// 按钮权限
-	const { BUTTONS } = useAuthButtons();
-	const { RangePicker } = DatePicker;
+  interface DataType {
+    key: string;
+    name: string;
+    age: number;
+    address: string;
+    tags: string[];
+  }
 
-	useEffect(() => {
-		console.log(BUTTONS);
-	}, []);
+  const columns: ColumnsType<DataType> = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name"
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+      key: "age"
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address"
+    },
+    {
+      title: "Tags",
+      key: "tags",
+      dataIndex: "tags"
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_: any, record: any) => (
+        <Space size="middle">
+          <a>Invite {record.name}</a>
+          <a>Delete</a>
+        </Space>
+      )
+    }
+  ];
 
-	const dataSource = [
-		{
-			key: "1",
-			name: "胡彦斌",
-			age: 32,
-			address: "西湖区湖底公园1号"
-		},
-		{
-			key: "2",
-			name: "胡彦祖",
-			age: 42,
-			address: "西湖区湖底公园1号"
-		},
-		{
-			key: "3",
-			name: "刘彦祖",
-			age: 18,
-			address: "西湖区湖底公园1号"
-		},
-		{
-			key: "4",
-			name: "刘彦祖",
-			age: 18,
-			address: "翻斗大街翻斗花园二号楼1001室"
-		},
-		{
-			key: "5",
-			name: "刘彦祖",
-			age: 18,
-			address: "翻斗大街翻斗花园二号楼1001室"
-		}
-	];
+  const [data, setData] = useState<DataType[]>([]);
 
-	const columns: any[] = [
-		{
-			title: "姓名",
-			dataIndex: "name",
-			key: "name",
-			align: "center"
-		},
-		{
-			title: "年龄",
-			dataIndex: "age",
-			key: "age",
-			align: "center"
-		},
-		{
-			title: "住址",
-			dataIndex: "address",
-			key: "address",
-			align: "center",
-			width: "50%"
-		}
-	];
-	return (
-		<div className="card content-box">
-			<div className="date">
-				<span>切换国际化的时候看我 😎 ：</span>
-				<RangePicker />
-			</div>
-			<div className="auth">
-				<Space>
-					{BUTTONS.add && <Button type="primary">我是 Admin && User 能看到的按钮</Button>}
-					{BUTTONS.delete && <Button type="primary">我是 Admin 能看到的按钮</Button>}
-					{BUTTONS.edit && <Button type="primary">我是 User 能看到的按钮</Button>}
-				</Space>
-			</div>
-			<Table bordered={true} dataSource={dataSource} columns={columns} />
-		</div>
-	);
+  const getType = () => {
+    selectAllGoodsBrand().then((res: any) => {
+      if (res.code === 0) {
+        setData(res.data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getType();
+  }, []);
+
+  return (
+    <div>
+      <div>
+        <Button type="primary">添加分类</Button>
+      </div>
+      <div>
+        <Table columns={columns} dataSource={data} />
+      </div>
+    </div>
+  );
 };
-
 export default UseHooks;
