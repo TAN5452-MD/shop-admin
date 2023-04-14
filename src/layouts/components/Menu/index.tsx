@@ -108,7 +108,7 @@ const LayoutMenu = (props: any) => {
         },
         {
           title: "分类管理",
-          icon: "AlertOutlined",
+          icon: "AppstoreOutlined",
           path: "/proTable/useHooks"
         }
       ];

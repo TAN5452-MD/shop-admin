@@ -81,3 +81,13 @@ export const selectAllApplicantMessage = (params: any) => {
 export const operateApplicantMessage = (params: any) => {
   return request.post<result>(`/audit/member/applicantMessage/operateApplicantMessage`, params);
 };
+
+
+//分类模块
+//添加分类
+export const addGoodsCategory  = (params: any) => {
+  return request.post<result>(`/audit/project/goodsCategory/addGoodsCategory`, params);
+}
+export const updateGoodsCategory  = (params: any) => {
+  return request.post<result>(`/audit/project/goodsCategory/updateGoodsCategory`, params);
+}
