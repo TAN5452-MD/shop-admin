@@ -8,6 +8,7 @@ import {Page} from '@/utils/util'
 const UseHooks = () => {
 	interface DataType {
 		name: string
+        brandId:string
 	}
 
 	const columns: ColumnsType<DataType> = [
@@ -41,6 +42,7 @@ const UseHooks = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
     const [title,setTitle] = useState('添加分类')
     const [isEdit,setIsEdit] = useState(false)
+    const [record,setRecord] = useState<DataType>({} as DataType)
     const pagination = {
         defaultPageSize:10,
         defaultCurrent:1,
@@ -56,17 +58,17 @@ const UseHooks = () => {
             }
         }
 
-	const showModal = () => {
+	const showModal = () => { 
+        formRef.setFieldsValue({name:''})
         setTitle('添加分类')
         setIsEdit(false)
 		setIsModalOpen(true);
 	};
 
 	const handleOk = () => {
-        console.log(isEdit)
         if(isEdit){
         formRef.validateFields(['name']).then( async (values: any) => {
-            const data = {name:values.name}
+            const data = {name:values.name,brandId:record.brandId}
             const result = await updateGoodsCategory(data) 
             if(result.code === 0){
             message.success('编辑成功')
@@ -101,6 +103,8 @@ const UseHooks = () => {
 	const handleEdit = (record: DataType) => {
         setIsEdit(true)
         setTitle('编辑分类')
+        setRecord(record)
+        console.log(record)
         formRef.setFieldsValue({name:record.name})
         setIsModalOpen(true)
 	};
