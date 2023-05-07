@@ -44,4 +44,5 @@ export interface AuthState {
 		[propName: string]: any;
 	};
 	authRouter: string[];
+	userInfo: {}
 }

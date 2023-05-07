@@ -4,6 +4,7 @@ import { Button, Form, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Login } from "@/api/interface";
 import { loginApi } from "@/api/modules/login";
+import { setUserInfo } from "@/redux/modules/auth/action";
 import { HOME_URL } from "@/config/config";
 import { connect } from "react-redux";
 import { setToken } from "@/redux/modules/global/action";
@@ -24,8 +25,9 @@ const LoginForm = (props: any) => {
 		try {
 			setLoading(true);
 			//先走自己接口 
-			const res:any = await login(loginForm);
+			const res: any = await login(loginForm);
 			if (res.code === 0) {
+				localStorage.setItem("userInfo", JSON.stringify(res.data))
 				setToken2(res.data.token!)
 				//密码加密
 				loginForm.password = md5(loginForm.password);

@@ -4,7 +4,7 @@ import { Menu, Spin } from "antd";
 import { findAllBreadcrumb, getOpenKeys, handleRouter, searchRoute } from "@/utils/util";
 import { setMenuList } from "@/redux/modules/menu/action";
 import { setBreadcrumbList } from "@/redux/modules/breadcrumb/action";
-import { setAuthRouter } from "@/redux/modules/auth/action";
+import { setAuthRouter} from "@/redux/modules/auth/action";
 import { getMenuList } from "@/api/modules/login";
 import { connect } from "react-redux";
 import type { MenuProps } from "antd";
@@ -74,7 +74,6 @@ const LayoutMenu = (props: any) => {
     setLoading(true);
     try {
       let { data } = await getMenuList();
-
       data = [
         {
           title: "首页",
@@ -110,6 +109,11 @@ const LayoutMenu = (props: any) => {
           title: "分类管理",
           icon: "AppstoreOutlined",
           path: "/proTable/useHooks"
+        },
+        {
+          title: "用户消息",
+          icon: "AppstoreOutlined",
+          path: "/echarts/waterChart"
         }
       ];
       if (!data) return;

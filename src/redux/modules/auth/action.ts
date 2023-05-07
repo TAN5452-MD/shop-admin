@@ -7,7 +7,15 @@ export const setAuthButtons = (authButtons: { [propName: string]: any }) => ({
 });
 
 // * setAuthRouter
-export const setAuthRouter = (authRouter: string[]) => ({
-	type: types.SET_AUTH_ROUTER,
-	authRouter
-});
+export const setAuthRouter = (authRouter: string[]) => {
+	return ({
+		type: types.SET_AUTH_ROUTER,
+		authRouter
+	});
+}
+export const setUserInfo = (userInfo: {}) => {
+	return {
+		type: types.SET_USER_INFO,
+		userInfo
+	}
+}

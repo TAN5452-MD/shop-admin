@@ -85,9 +85,28 @@ export const operateApplicantMessage = (params: any) => {
 
 //分类模块
 //添加分类
-export const addGoodsCategory  = (params: any) => {
+export const addGoodsCategory = (params: any) => {
   return request.post<result>(`/audit/project/goodsCategory/addGoodsCategory`, params);
 }
-export const updateGoodsCategory  = (params: any) => {
+export const updateGoodsCategory = (params: any) => {
   return request.post<result>(`/audit/project/goodsCategory/updateGoodsCategory`, params);
 }
+
+
+//客服模块
+
+export const already = (id: string) => (
+  request.get<result>(`/audit/member/sessionList/already?id=${id}`,)
+)
+
+export const createSession = (obj: {
+  userId: string,
+  userName: string,
+  adminId: string,
+}) => request.get<result>(
+  `/audit/member/sessionList/createSession?id=${obj.userId}&toUserId=${obj.adminId}&toUserName=${obj.userName}`,
+)
+export const selectUserRoleList = () => request.get<result>(`/audit/member/user/selectUserRoleList?roleCode=admin`,)
+
+
+export const msgInfo = (id: string) => request.get<result>(`/audit/member/msgInfo/msgList?sessionId=${id}`,)
