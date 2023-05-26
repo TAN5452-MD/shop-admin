@@ -275,9 +275,12 @@ const Embedded = () => {
 	}
 	//商品分类查询
 	const queryCategory = async () => {
-		const result = await selectAllGoodsCategory()
+		const result = await selectAllGoodsCategory({
+                pageNo:'-1',
+                pageSize:'-1',
+            })
 		if (result.code === 0) {
-			setCategorySelect(result.data)
+			setCategorySelect(result.data.data)
 		}
 	}
 	//品牌分类查询

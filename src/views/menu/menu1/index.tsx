@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addGoods, addPolicy, deletePolicy, publishGoods, selectGoodsInfo, selectPolicy, updatePolicy } from '@/api/myapi/index'
 import { getToken2 } from "@/utils/token";
+const { Search } = Input;
 const Menu1 = () => {
 
 	const { TextArea } = Input;
@@ -91,7 +92,9 @@ const Menu1 = () => {
 		total: page.total,
 		onChange: pageChange
 	}
-
+    const onSearch = (value: string) => {
+				setSearch(value)
+    }
 	//methods
 	const handleOk = () => {
 		setIsModalOpen(false);
@@ -160,6 +163,10 @@ const Menu1 = () => {
 	useEffect(() => {
 		accessPolicy()
 	}, [page.pageNo, page.pageSize])
+
+	useEffect(() => {
+		accessPolicy()
+	},[search])
 
 	return (
 		<div>
@@ -241,6 +248,14 @@ const Menu1 = () => {
 			</Modal>
 
 			<Button type="primary" onClick={addShop}>添加政策</Button>
+      <div className='w-70 float-right'>
+			<Search
+					placeholder="请输入政策名称"
+					allowClear
+					enterButton="Search"
+					onSearch={onSearch}
+			/>
+			</div>
 			<br />
 			<br />
 			<Table pagination={paginationProps} columns={columns} dataSource={policyList} rowKey={(record) => record.id}></Table>

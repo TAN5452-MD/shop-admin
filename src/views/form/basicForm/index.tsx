@@ -1,8 +1,8 @@
 import "./index.less";
 import { useEffect, useState } from "react";
-import { Space, Table, Tag, Button, message, Popconfirm, Modal, PaginationProps } from 'antd';
+import { Space, Table, Input, Button, message, Popconfirm, Modal, PaginationProps } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { selectUserList } from "@/api/myapi";
+import { selectUserList,usercancelUserDealer } from "@/api/myapi";
 
 const BasicForm = () => {
 	type Page = {
@@ -40,8 +40,13 @@ const BasicForm = () => {
 		total: 0,
 	})
 	const [userList, setUserList] = useState<any[]>([])
-
-
+	const [reason, setReason] = useState<string>('')
+	const [curUser, setCurUser] = useState<DataType>({} as DataType)
+	const cancelAuth =  (obj: DataType) => {
+			setCurUser(obj)
+			setReason('')
+			setIsModalOpen(true);
+	} 
 	const columns: ColumnsType<DataType> = [
 		{
 			title: '用户名',
@@ -67,7 +72,20 @@ const BasicForm = () => {
 		{
 			title: '是否经销商',
 			key: 'statusStr',
-			dataIndex: 'statusStr'
+			render: (text, record) => (
+				<>
+				{record.roleName === '经销商' ? 
+				<a>是</a> : 
+				<a className="color-red">否</a> }
+				</>
+			)
+		},
+		{
+			title: '操作',
+			key: 'aciton',
+			render: (text, record) => (
+				<Button disabled={!(record.roleName === '经销商') } onClick={() => cancelAuth(record)}>取消资格</Button>
+			)
 		},
 	];
 	const pageChange: PaginationProps['onChange'] = (cur: number, size: number) => {
@@ -98,23 +116,61 @@ const BasicForm = () => {
 	};
 
 	const cancel = (e: React.MouseEvent<HTMLElement>) => {
-		console.log(e);
 		message.error('Click on No');
 	};
 	const getUserList = async () => {
 		const result = await selectUserList(page)
 		if (result.code === 0) {
 			setUserList(result.data.data)
-			setPage({ ...page, total: result.data.total })
+			setPage({ ...page, total: result.data.recordsTotal })
 		}
 	}
 
 	useEffect(() => {
 		getUserList()
 	}, [page.pageNo, page.pageSize])
+  const [isModalOpen, setIsModalOpen] = useState(false);
+	const showModal = () => {
+    setIsModalOpen(true);
+  };
 
+  const handleOk = () => {
+		if(reason === ''){
+			message.error('请输入取消原因')
+			return
+		}
+		const data = {
+			userId: curUser.userId,
+			userName: curUser.userName,
+			message: reason
+		}
+		usercancelUserDealer(data).then(res => {
+			if(res.code === 0) {
+				message.success('取消成功')
+			}
+		}).finally(() => {
+			setIsModalOpen(false);
+			getUserList()
+		})
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+	const editReason = (e:React.ChangeEvent<HTMLInputElement>) => {
+		setReason(e.target.value)
+	}
 	return (
 		<div>
+				<Modal 
+				title="取消经销商资格" 
+				open={isModalOpen} 
+				onOk={handleOk} 
+				onCancel={handleCancel}
+				destroyOnClose={true}
+				>
+        <Input placeholder="请输入取消原因" onChange={editReason}/>
+      </Modal>
 			<Table pagination={paginationProps} columns={columns} dataSource={userList} ></Table>
 		</div>
 	)

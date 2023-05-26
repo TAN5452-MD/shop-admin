@@ -18,6 +18,10 @@ export const login = (params: user) => {
 export const selectUserList = (params: any) => {
   return request.post<result>(`/audit/member/user/selectUserList`, params);
 };
+//用户列表查询
+export const usercancelUserDealer = (params: any) => {
+  return request.put<result>(`/audit/member/user/cancelUserDealer`, params);
+};
 
 //商品模块
 
@@ -32,14 +36,14 @@ export const selectGoodsInfo = (params: any) => {
 //删除商品
 export const deleteGoods = (id: string) => {
   return request.delete<result>(`/audit/project/goodsInfo/deleteGoods/${id}`);
-};
+}
 //上下架商品
 export const publishGoods = (params: any) => {
   return request.put<result>(`/audit/project/goodsInfo/publishGoods`, params);
 };
 //商品分类查询
-export const selectAllGoodsCategory = () => {
-  return request.post<result>(`/audit/project/goodsCategory/selectAllGoodsCategory`);
+export const selectAllGoodsCategory = (params: any) => {
+  return request.post<result>(`/audit/project/goodsCategory/selectAllGoodsCategory`,params);
 };
 //品牌分类查询
 export const selectAllGoodsBrand = () => {
