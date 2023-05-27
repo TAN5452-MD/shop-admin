@@ -47,7 +47,7 @@ const UseHooks = () => {
         defaultPageSize: 10,
         defaultCurrent: 1,
         total: page.total,
-        current: page.page,
+        current: page.pageNo,
         pageSize: page.pageSize,
         onChange: (ipage: number) => {
             setPage({

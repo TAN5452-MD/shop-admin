@@ -78,8 +78,8 @@ const index = () => {
 			key: 'totalAmount',
 			render(value, record, index) {
 				return value === '0' ?
-					<a href="" style={{ color: 'red' }}>未支付</a> :
-					<a href="">已支付</a>
+					<a style={{ color: 'red' }}>未支付</a> :
+					<a >已支付</a>
 
 			},
 		},

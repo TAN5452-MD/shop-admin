@@ -1,4 +1,4 @@
-import "./index.less";
+import "./index.less"
 import { useEffect, useState } from "react";
 import { Space, Table, Input, Button, message, Popconfirm, Modal, PaginationProps } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
