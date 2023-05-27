@@ -211,6 +211,7 @@ const Embedded = () => {
 	const edit = async () => {
 		const a: any = editForm.current
 		const data = a.getFieldValue()
+		data.projectAttachList = curFileUrl
 		try {
 			brandSelect.forEach((element: any) => {
 				if (element.brandId === data.brandId) {
@@ -246,6 +247,7 @@ const Embedded = () => {
 	}
 	//处理url带入参数中
 	const addFileUrl = (file: any) => {
+		setCurInfo(null)
 		if (file.file.status === 'done') {
 			curFileUrl.push(file.file.response.data[0])
 		}
@@ -276,9 +278,9 @@ const Embedded = () => {
 	//商品分类查询
 	const queryCategory = async () => {
 		const result = await selectAllGoodsCategory({
-                pageNo:'-1',
-                pageSize:'-1',
-            })
+			pageNo: '-1',
+			pageSize: '-1',
+		})
 		if (result.code === 0) {
 			setCategorySelect(result.data.data)
 		}
@@ -290,7 +292,9 @@ const Embedded = () => {
 			setBrandSelect(result.data)
 		}
 	}
+	const [curInfo, setCurInfo] = useState<any>()
 	const editShop = async (row: any) => {
+		setCurInfo(row)
 		setEditOpen(true)
 		setTimeout(() => {
 			const form: any = editForm.current
@@ -477,13 +481,12 @@ const Embedded = () => {
 					</Form.Item>
 					<Form.Item
 						label="商品图片"
-						name="picture"
+						name="spuImgUrl"
 					>
-						{imageList.length === 0 ? '' : imageList.map(item => {
-							return (
-								<img src={item.attrchUrl} alt="" />
-							)
-						})}
+						{curInfo && <img
+							className="w-10 h-10 border-solid border-2 border-gray-200 ma-2"
+							src={`http://43.139.230.109:9002/img/${curInfo?.spuImgUrl.split("/").at(-1)}`} alt="" />
+						}
 						<Upload onChange={addFileUrl} {...props}>
 							<Button icon={<UploadOutlined />}>上传图片</Button>
 						</Upload>
